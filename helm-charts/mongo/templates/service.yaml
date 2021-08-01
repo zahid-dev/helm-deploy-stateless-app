@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo-deployment
+  labels:
+    app.kubernetes.io/name: mongo-deployment
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Values.image.tag }}
+    app.kubernetes.io/component: mongo-deployment
+    app.kubernetes.io/part-of: mongo-deployment
+    app.kubernetes.io/managed-by: helm2
+spec:
+  selector:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+  type: NodePort
